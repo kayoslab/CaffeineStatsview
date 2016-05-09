@@ -28,6 +28,7 @@ import UIKit
 class StatsView: UIView {
     internal var objects:Array<Double>?
     private var intersectDistance:Int = 2
+    private var catmullAlpha:CGFloat = 0.3
     private var useCatmullRom:Bool = true
     // MARK: - Constants
     private let margin:CGFloat = 20.0
@@ -35,7 +36,6 @@ class StatsView: UIView {
     private let bottomBorder:CGFloat = 40
     private let graphBorder:CGFloat = 30
     private let statsColor:UIColor = .redColor()
-
     // MARK: - Init
     override init (frame : CGRect) {
         super.init(frame : frame)
@@ -128,7 +128,6 @@ class StatsView: UIView {
                     // Implementation of Catmull Rom
                     let startIndex = 1
                     let endIndex = objects.count - 2
-                    let alpha:CGFloat = 0.25
                     for i in startIndex ..< endIndex {
                         let p0 = CGPoint(x:columnXPoint(i-1 < 0 ? objects.count - 1 : i - 1), y:columnYPoint(Int(objects[i-1 < 0 ? objects.count - 1 : i - 1])))
                         let p1 = CGPoint(x:columnXPoint(i), y:columnYPoint(Int(objects[i])))
@@ -139,15 +138,15 @@ class StatsView: UIView {
                         let d2 = p2.deltaTo(p1).length()
                         let d3 = p3.deltaTo(p2).length()
 
-                        var b1 = p2.multiplyBy(pow(d1, 2 * alpha))
-                        b1 = b1.deltaTo(p0.multiplyBy(pow(d2, 2 * alpha)))
-                        b1 = b1.addTo(p1.multiplyBy(2 * pow(d1, 2 * alpha) + 3 * pow(d1, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
-                        b1 = b1.multiplyBy(1.0 / (3 * pow(d1, alpha) * (pow(d1, alpha) + pow(d2, alpha))))
+                        var b1 = p2.multiplyBy(pow(d1, 2 * self.catmullAlpha))
+                        b1 = b1.deltaTo(p0.multiplyBy(pow(d2, 2 * self.catmullAlpha)))
+                        b1 = b1.addTo(p1.multiplyBy(2 * pow(d1, 2 * self.catmullAlpha) + 3 * pow(d1, self.catmullAlpha) * pow(d2, self.catmullAlpha) + pow(d2, 2 * self.catmullAlpha)))
+                        b1 = b1.multiplyBy(1.0 / (3 * pow(d1, self.catmullAlpha) * (pow(d1, self.catmullAlpha) + pow(d2, self.catmullAlpha))))
 
-                        var b2 = p1.multiplyBy(pow(d3, 2 * alpha))
-                        b2 = b2.deltaTo(p3.multiplyBy(pow(d2, 2 * alpha)))
-                        b2 = b2.addTo(p2.multiplyBy(2 * pow(d3, 2 * alpha) + 3 * pow(d3, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
-                        b2 = b2.multiplyBy(1.0 / (3 * pow(d3, alpha) * (pow(d3, alpha) + pow(d2, alpha))))
+                        var b2 = p1.multiplyBy(pow(d3, 2 * self.catmullAlpha))
+                        b2 = b2.deltaTo(p3.multiplyBy(pow(d2, 2 * self.catmullAlpha)))
+                        b2 = b2.addTo(p2.multiplyBy(2 * pow(d3, 2 * self.catmullAlpha) + 3 * pow(d3, self.catmullAlpha) * pow(d2, self.catmullAlpha) + pow(d2, 2 * self.catmullAlpha)))
+                        b2 = b2.multiplyBy(1.0 / (3 * pow(d3, self.catmullAlpha) * (pow(d3, self.catmullAlpha) + pow(d2, self.catmullAlpha))))
 
                         if i == startIndex {
                             graphPath.moveToPoint(p0)
@@ -182,7 +181,7 @@ class StatsView: UIView {
         }
     }
 
-    internal func setUpGraphView(statisticsItems:Array<Double>, intersectDistance:Int, catmullRom:Bool) {
+    internal func setUpGraphView(statisticsItems:Array<Double>, intersectDistance:Int, catmullRom:Bool, catmullAlpha:CGFloat = 0.30) {
         if statisticsItems.count <= 1 {
             self.objects = [0.0, 0.0]
             self.intersectDistance = 1
@@ -196,6 +195,7 @@ class StatsView: UIView {
             self.objects = statisticsItems
         }
         self.useCatmullRom = catmullRom
+        self.catmullAlpha = catmullAlpha
         self.setNeedsDisplay()
     }
 }
