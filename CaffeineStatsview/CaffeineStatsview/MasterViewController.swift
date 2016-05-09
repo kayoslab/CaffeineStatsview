@@ -26,7 +26,7 @@ import Foundation
 import UIKit
 
 class MasterViewController: UITableViewController {
-    internal var objects:Array<AnyObject> = []
+    internal var objects:Array<Double> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,26 +46,26 @@ class MasterViewController: UITableViewController {
     }
 
     func insertNewObject(sender: AnyObject) {
-        objects.insert(NSDate(), atIndex: 0)
+        let random = Double(arc4random_uniform(25))
+
+        objects.insert(random, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
 
     // MARK: - Segues
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row]
                 if let controller = segue.destinationViewController as? DetailViewController {
-                    controller.detailItem = object
+                    controller.objects = self.objects
+                    controller.indexPath = indexPath
                 }
             }
         }
     }
 
     // MARK: - Table View
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -77,8 +77,8 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let object = self.objects[indexPath.row]
+        cell.textLabel!.text = "\(object)"
         return cell
     }
 
@@ -92,7 +92,7 @@ class MasterViewController: UITableViewController {
             objects.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
-            //
+            // 
         }
     }
 }

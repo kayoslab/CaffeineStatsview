@@ -26,16 +26,17 @@ import Foundation
 import UIKit
 
 class StatsView: UIView {
-    // MARK -
     internal var objects:Array<Double>?
-    // MARK: - Constants
+    private var intersectDistance:Int = 2
     private var useCatmullRom:Bool = true
+    // MARK: - Constants
     private let margin:CGFloat = 20.0
     private let topBorder:CGFloat = 10
     private let bottomBorder:CGFloat = 40
     private let graphBorder:CGFloat = 30
-    private var intersectDistance:Int = 4
+    private let statsColor:UIColor = .redColor()
 
+    // MARK: - Init
     override init (frame : CGRect) {
         super.init(frame : frame)
     }
@@ -49,8 +50,7 @@ class StatsView: UIView {
     }
 
     override func drawRect(rect: CGRect) {
-        if let objects = self.objects {
-
+        if var objects = self.objects {
             let graphHeight = rect.height - self.topBorder - self.bottomBorder - self.graphBorder
             let spacer = (rect.width - self.margin * 2) / CGFloat((objects.count-1))
             // Is there any maxValue?
@@ -68,10 +68,13 @@ class StatsView: UIView {
                 return y
             }
 
-            for index in 0 ..< Int(objects.count / self.intersectDistance) {
-                let intersectHeight = (bounds.height - bottomBorder - topBorder)
-                let intersectPath = UIBezierPath()
+            let intersectHeight = (bounds.height - bottomBorder - topBorder)
 
+            let numberOfIntersections = Int(ceil(Double(objects.count) / Double(intersectDistance)))
+            print(numberOfIntersections)
+            for index in 0 ..< numberOfIntersections {
+
+                let intersectPath = UIBezierPath()
                 let intersectStartPoint = CGPoint(x: columnXPoint(index * self.intersectDistance), y: bounds.height-bottomBorder)
                 let intersectEndPoint = CGPoint(x: intersectStartPoint.x, y: intersectStartPoint.y - intersectHeight)
                 intersectPath.moveToPoint(intersectStartPoint)
@@ -101,14 +104,20 @@ class StatsView: UIView {
                 CGContextRestoreGState(context)
             }
 
-
-            // draw the line graph
-            UIColor.redColor().setFill()
-            UIColor.redColor().setStroke()
+            // Graph Color
+            self.statsColor.setFill()
+            self.statsColor.setStroke()
             let graphPath = UIBezierPath()
 
 
-            if(objects.count != 0) {
+            var notZero:Bool = false
+            for object in objects {
+                if (object != 0.0) {
+                    notZero = true
+                }
+            }
+            
+            if(notZero) {
                 if (self.useCatmullRom == false || objects.count < 4) {
                     // Draw Graph without Catmull Rom
                     graphPath.moveToPoint(CGPoint(x:columnXPoint(0), y:columnYPoint(Int(objects[0]))))
@@ -158,12 +167,35 @@ class StatsView: UIView {
                     graphPath.addLineToPoint(nextPoint)
                 }
             }
+
+            graphPath.lineWidth = 2.0
+            graphPath.stroke()
+            for i in 0..<objects.count {
+                if (i % self.intersectDistance == 0) {
+                    var point = CGPoint(x:columnXPoint(i), y:columnYPoint(Int(objects[i])))
+                    point.x -= 5.0/2
+                    point.y -= 5.0/2
+
+                    let circle = UIBezierPath(ovalInRect: CGRect(origin: point, size: CGSize(width: 5.0, height: 5.0)))
+                    circle.fill()
+                }
+            }
         }
     }
 
-    internal func setUpGraphView(statisticsItems:Array<Double>, intersectDistance:Int = 4, catmullRom:Bool = true) {
-        self.objects = statisticsItems
-        self.intersectDistance = intersectDistance
+    internal func setUpGraphView(statisticsItems:Array<Double>, intersectDistance:Int, catmullRom:Bool = false) {
+        if statisticsItems.count <= 1 {
+            self.objects = [0.0, 0.0]
+            self.intersectDistance = 1
+        } else if intersectDistance == 0 {
+            self.intersectDistance = 1
+            self.intersectDistance += statisticsItems.count % 2
+
+            self.objects = statisticsItems
+        } else {
+            self.intersectDistance = intersectDistance
+            self.objects = statisticsItems
+        }
         self.useCatmullRom = catmullRom
         self.setNeedsDisplay()
     }

@@ -26,19 +26,25 @@ import Foundation
 import UIKit
 
 class DetailViewController: UIViewController {
+    @IBOutlet var statsView: StatsView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
-    internal var detailItem: AnyObject? {
+    internal var objects:Array<Double>? {
         didSet {
             // Update the view.
             self.configureView()
         }
     }
-
+    internal var indexPath:NSIndexPath? {
+        didSet {
+            self.setupLabels()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
+        self.setupLabels()
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,10 +53,18 @@ class DetailViewController: UIViewController {
     }
 
     private func configureView() {
-        // Update the user interface for the detail item.
-        if let detail = self.detailItem {
-            if let label = self.detailDescriptionLabel {
-                label.text = detail.description
+        // Update the user interface for the objects item.
+        if let objects = self.objects {
+            if self.statsView != nil {
+                self.statsView.setUpGraphView(objects, intersectDistance:0)
+            }
+        }
+    }
+
+    private func setupLabels() {
+        if let objects = self.objects, indexPath = self.indexPath {
+            if self.detailDescriptionLabel != nil {
+                self.detailDescriptionLabel.text = "Current Value: \(objects[indexPath.row])"
             }
         }
     }
