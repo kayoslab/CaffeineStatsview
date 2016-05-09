@@ -59,8 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				6089F5AB1CE0E64D00BAB98D /* Model */,
-				6089F5A71CE0E63000BAB98D /* Controller */,
 				6089F5A81CE0E63700BAB98D /* View */,
+				6089F5A71CE0E63000BAB98D /* Controller */,
 				6089F5A91CE0E63C00BAB98D /* Supporting Files */,
 			);
 			path = CaffeineStatsview;
@@ -69,10 +69,10 @@
 		6089F5A71CE0E63000BAB98D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6089F5951CE0E61000BAB98D /* MasterViewController.swift */,
 				6089F5971CE0E61000BAB98D /* DetailViewController.swift */,
+				6089F5951CE0E61000BAB98D /* MasterViewController.swift */,
 			);
-			name = Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		6089F5A81CE0E63700BAB98D /* View */ = {
@@ -81,7 +81,7 @@
 				6089F5AA1CE0E64600BAB98D /* Storyboard */,
 				6089F5AC1CE0E68500BAB98D /* StatsView.swift */,
 			);
-			name = View;
+			path = View;
 			sourceTree = "<group>";
 		};
 		6089F5A91CE0E63C00BAB98D /* Supporting Files */ = {
@@ -90,16 +90,16 @@
 				6089F59C1CE0E61000BAB98D /* Assets.xcassets */,
 				6089F5A11CE0E61000BAB98D /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		6089F5AA1CE0E64600BAB98D /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				6089F5991CE0E61000BAB98D /* Main.storyboard */,
 				6089F59E1CE0E61000BAB98D /* LaunchScreen.storyboard */,
+				6089F5991CE0E61000BAB98D /* Main.storyboard */,
 			);
-			name = Storyboard;
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		6089F5AB1CE0E64D00BAB98D /* Model */ = {
@@ -107,7 +107,7 @@
 			children = (
 				6089F5931CE0E61000BAB98D /* AppDelegate.swift */,
 			);
-			name = Model;
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +197,7 @@
 				6089F59A1CE0E61000BAB98D /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		6089F59E1CE0E61000BAB98D /* LaunchScreen.storyboard */ = {
@@ -205,6 +206,7 @@
 				6089F59F1CE0E61000BAB98D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -299,7 +301,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = CaffeineStatsview/Info.plist;
+				INFOPLIST_FILE = "CaffeineStatsview/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kayos.CaffeineStatsview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -310,7 +312,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = CaffeineStatsview/Info.plist;
+				INFOPLIST_FILE = "CaffeineStatsview/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kayos.CaffeineStatsview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -336,6 +338,7 @@
 				6089F5A61CE0E61000BAB98D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
