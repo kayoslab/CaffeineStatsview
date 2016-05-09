@@ -26,8 +26,7 @@ import Foundation
 import UIKit
 
 class MasterViewController: UITableViewController {
-    var objects = [AnyObject]()
-
+    internal var objects:Array<AnyObject> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
