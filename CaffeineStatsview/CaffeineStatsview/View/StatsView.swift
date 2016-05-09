@@ -71,7 +71,6 @@ class StatsView: UIView {
             let intersectHeight = (bounds.height - bottomBorder - topBorder)
 
             let numberOfIntersections = Int(ceil(Double(objects.count) / Double(intersectDistance)))
-            print(numberOfIntersections)
             for index in 0 ..< numberOfIntersections {
 
                 let intersectPath = UIBezierPath()
@@ -129,7 +128,7 @@ class StatsView: UIView {
                     // Implementation of Catmull Rom
                     let startIndex = 1
                     let endIndex = objects.count - 2
-                    let alpha:CGFloat = 0.5
+                    let alpha:CGFloat = 0.25
                     for i in startIndex ..< endIndex {
                         let p0 = CGPoint(x:columnXPoint(i-1 < 0 ? objects.count - 1 : i - 1), y:columnYPoint(Int(objects[i-1 < 0 ? objects.count - 1 : i - 1])))
                         let p1 = CGPoint(x:columnXPoint(i), y:columnYPoint(Int(objects[i])))
@@ -183,7 +182,7 @@ class StatsView: UIView {
         }
     }
 
-    internal func setUpGraphView(statisticsItems:Array<Double>, intersectDistance:Int, catmullRom:Bool = false) {
+    internal func setUpGraphView(statisticsItems:Array<Double>, intersectDistance:Int, catmullRom:Bool) {
         if statisticsItems.count <= 1 {
             self.objects = [0.0, 0.0]
             self.intersectDistance = 1

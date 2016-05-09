@@ -35,35 +35,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ly-qF-Y5g" customClass="StatsView" customModule="CaffeineStatsview" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="600" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="20" y="372" width="560" height="208"/>
+                                <rect key="frame" x="20" y="416" width="560" height="164"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" size="system"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JlU-Y1-Jea">
+                                <rect key="frame" x="247.5" y="72" width="105" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="5jO-nK-zkb"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Linear"/>
+                                    <segment title="Cubic"/>
+                                </segments>
+                                <connections>
+                                    <action selector="linearCubicSegmentValueChanged:" destination="JEX-9P-axG" eventType="valueChanged" id="JRf-WA-AKd"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ly-qF-Y5g" customClass="StatsView" customModule="CaffeineStatsview" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="108" width="600" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="JlU-Y1-Jea" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="77X-w2-VaH"/>
                             <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="20" id="BAx-nj-Acu"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="2ly-qF-Y5g" secondAttribute="bottom" constant="8" id="Bjx-XW-6Uy"/>
+                            <constraint firstItem="2ly-qF-Y5g" firstAttribute="top" secondItem="JlU-Y1-Jea" secondAttribute="bottom" constant="8" id="GKD-7U-ykk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2ly-qF-Y5g" secondAttribute="trailing" constant="-20" id="Hch-as-zRV"/>
                             <constraint firstItem="2ly-qF-Y5g" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="-20" id="Jpb-W5-a2l"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="KK3-Sd-Ors"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="Tw6-ea-Y7f"/>
+                            <constraint firstItem="JlU-Y1-Jea" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="8" id="bTP-ag-x8y"/>
                             <constraint firstItem="2ly-qF-Y5g" firstAttribute="height" secondItem="svH-Pt-448" secondAttribute="height" multiplier="0.5" id="vzk-Xs-hV9"/>
                             <constraint firstItem="2ly-qF-Y5g" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="yoR-DD-7k9"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="yoR-DD-7k9"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
-                        <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="byX-wp-Sn2"/>
-                        <outlet property="statsView" destination="2ly-qF-Y5g" id="jxw-wo-sSq"/>
+                        <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="FvL-6P-glg"/>
+                        <outlet property="linearCubicSegment" destination="JlU-Y1-Jea" id="7Gh-jK-lEj"/>
+                        <outlet property="statsView" destination="2ly-qF-Y5g" id="byd-vl-RTw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>

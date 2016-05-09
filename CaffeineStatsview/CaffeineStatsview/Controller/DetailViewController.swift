@@ -26,9 +26,10 @@ import Foundation
 import UIKit
 
 class DetailViewController: UIViewController {
+    @IBOutlet var linearCubicSegment: UISegmentedControl!
     @IBOutlet var statsView: StatsView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
-
+    private var catmull:Bool = false
     internal var objects:Array<Double>? {
         didSet {
             // Update the view.
@@ -56,7 +57,7 @@ class DetailViewController: UIViewController {
         // Update the user interface for the objects item.
         if let objects = self.objects {
             if self.statsView != nil {
-                self.statsView.setUpGraphView(objects, intersectDistance:0)
+                self.statsView.setUpGraphView(objects, intersectDistance:0, catmullRom: self.catmull)
             }
         }
     }
@@ -68,4 +69,10 @@ class DetailViewController: UIViewController {
             }
         }
     }
+
+    @IBAction func linearCubicSegmentValueChanged(sender: UISegmentedControl) {
+        self.catmull = !self.catmull
+        self.configureView()
+    }
+
 }
